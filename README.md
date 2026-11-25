@@ -39,7 +39,7 @@ timeline
 </div>
 
 [![YouTube](https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white)]() 
-[![Reddit](https://img.shields.io/badge/Reddit-FF4500?style=for-the-badge&logo=reddit&logoColor=white)](https://www.reddit.com/r/LanguageTechnology/new/)
+[![Reddit](https://img.shields.io/badge/Reddit-FF4500?style=for-the-badge&logo=reddit&logoColor=white)](https://www.reddit.com/r/MLQuestions/new/)
 
 <p align="center">
     <a href="https://github.com/cybersecurity-dev/"><img height="25" src="https://github.com/cybersecurity-dev/cybersecurity-dev/blob/main/assets/github.svg" alt="GitHub"></a>
@@ -81,7 +81,74 @@ flowchart LR
 - [My Other Awesome Lists](#my-other-awesome-lists)
 - [Contributing](#contributing)
 - [Contributors](#contributors)
-- 
+
+
+```mermaid
+flowchart TB
+    A["Start: define graph-learning problem"] --> B{"Prediction target?"}
+    B -->|Node| N["Node embedding + node classifier"]
+    B -->|Edge| E["Pair encoder / decoder<br/>GAE, VGAE, SEAL, R-GCN"]
+    B -->|Whole graph| G["Message passing + pooling + classifier"]
+
+    N --> T{"Graph characteristics?"}
+    E --> T
+    G --> T
+
+    T -->|Homogeneous, mostly homophilous| H["GCN / GraphSAGE / GAT / GIN"]
+    T -->|Multiple relation or node types| R["R-GCN / HAN / HGT / MAGNN"]
+    T -->|Temporal| D["TGN / TGAT / EvolveGCN / DCRNN"]
+    T -->|Heterophilous| X["H2GCN / FAGCN / GPR-GNN / LINKX"]
+    T -->|Hypergraph| Y["HGNN / HyperGCN / Hyper-SAGNN"]
+
+    H --> S{"Does the full graph fit in memory?"}
+    R --> S
+    D --> S
+    X --> S
+    Y --> S
+
+    S -->|Yes| FULL["Full-batch or sparse mini-batch training"]
+    S -->|No| SAMPLE{"Scaling strategy"}
+    SAMPLE -->|Neighbor| NS["GraphSAGE / PinSAGE"]
+    SAMPLE -->|Layer| LS["FastGCN / LADIES"]
+    SAMPLE -->|Subgraph| SS["Cluster-GCN / GraphSAINT"]
+    SAMPLE -->|Precompute| PC["SGC / SIGN / PPRGo"]
+
+    FULL --> A1{"Neighbor relevance unequal?"}
+    NS --> A1
+    LS --> A1
+    SS --> A1
+    PC --> A1
+    A1 -->|No, strong baseline| GCN["GCN or GIN"]
+    A1 -->|Yes| GAT["GAT / GATv2 / HGT"]
+    A1 -->|Need global context| GT["Graphormer / GPS / Exphormer"]
+
+    GCN --> P{"Graph-level task?"}
+    GAT --> P
+    GT --> P
+    P -->|No| OUT["Train and evaluate"]
+    P -->|Yes| POOL{"Pooling choice"}
+    POOL -->|Simple baseline| SIMPLE["Mean / Sum / Max"]
+    POOL -->|Select nodes| TOPK["TopKPool / SAGPool"]
+    POOL -->|Learn hierarchy| DIFF["DiffPool / MinCutPool"]
+    POOL -->|Order nodes| SORT["DGCNN / SortPooling"]
+    SIMPLE --> OUT
+    TOPK --> OUT
+    DIFF --> OUT
+    SORT --> OUT
+
+    OUT --> CHECK["Report macro-F1, per-class recall,<br/>runtime, memory, repeated seeds, ablations"]
+
+    classDef decision fill:#fff8db,stroke:#d9a800,color:#17223b
+    classDef action fill:#eaf0ff,stroke:#246bfd,color:#17223b
+    classDef model fill:#e9f8f2,stroke:#22a06b,color:#17223b
+    classDef eval fill:#fcecf2,stroke:#c43c78,color:#17223b
+    class B,T,S,SAMPLE,A1,P,POOL decision
+    class A,N,E,G,FULL,OUT action
+    class H,R,D,X,Y,NS,LS,SS,PC,GCN,GAT,GT,SIMPLE,TOPK,DIFF,SORT model
+    class CHECK eval
+
+```
+
 ##
 
 ### My Other Awesome Lists
